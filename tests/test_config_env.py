@@ -9,7 +9,7 @@ PLAN_DIR = Path(__file__).resolve().parent.parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import config  # noqa: E402
+from school_plan import config  # noqa: E402
 
 
 def test_load_dotenv_parses_values_and_preserves_existing_env(tmp_path, monkeypatch):

@@ -9,6 +9,14 @@ window {
     color: @fg;
 }
 
+/* Strip default GTK/Adwaita button bevels, gradients, and shadows for razor-flat Omarchy chrome */
+button {
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+}
+
 /* ============================================================
    OUTER SURFACES
    ============================================================ */
@@ -429,9 +437,9 @@ button.ev-mini-btn {
     background: transparent;
     color: @secondary;
     border: 1px solid transparent;
-    min-width: 18px;
-    min-height: 18px;
-    padding: 0 2px;
+    min-width: 16px;
+    min-height: 16px;
+    padding: 0 1px;
     font-size: 10px;
     opacity: 0.55;
     transition: opacity 100ms ease, background 100ms ease, border-color 100ms ease, color 100ms ease;
@@ -453,13 +461,17 @@ button.ev-mini-btn:hover {
    QUIET MONOCHROME COMPLETED ITEMS
    ============================================================ */
 .cal-done-sep {
-    margin-top: 8px;
+    margin-top: 2px;
     margin-bottom: 4px;
-    padding-top: 6px;
-    border-top: 1px solid @hairline;
     font-weight: 700;
     color: @secondary;
     letter-spacing: 0.06em;
+}
+
+.cal-done-sep-divider {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid @hairline;
 }
 
 .cal-event-done-compact {
@@ -650,23 +662,29 @@ button.btn-action-chip:active {
     background-color: @ctrl_pressed_bg;
 }
 
+button.text-button.btn-action-chip.btn-done-chip,
 button.btn-done-chip {
     border-color: @success;
     color: @success_ink;
 }
 
+button.text-button.btn-action-chip.btn-done-chip:hover,
 button.btn-done-chip:hover {
     background-color: @ok_tint;
+    border-color: @success;
     color: @bright;
 }
 
+button.text-button.btn-action-chip.btn-submit-alert-chip,
 button.btn-submit-alert-chip {
     border-color: @warning;
     color: @warning_ink;
 }
 
+button.text-button.btn-action-chip.btn-submit-alert-chip:hover,
 button.btn-submit-alert-chip:hover {
     background-color: @warn_tint;
+    border-color: @warning;
     color: @bright;
 }
 

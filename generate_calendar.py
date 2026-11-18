@@ -14,7 +14,7 @@ PLAN_DIR = Path(__file__).resolve().parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import config
+from school_plan import config
 
 TASKS_PATH = str(config.TASKS_PATH)
 ICS_PATH = str(config.ICS_PATH)

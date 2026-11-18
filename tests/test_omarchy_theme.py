@@ -12,7 +12,7 @@ PLAN_DIR = Path(__file__).resolve().parent.parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import omarchy_theme  # noqa: E402
+from school_plan import omarchy_theme  # noqa: E402
 
 
 def _write_file(path: Path, text: str) -> None:
@@ -301,7 +301,7 @@ def test_all_installed_omarchy_stock_themes_load_with_readable_contrast(tmp_path
 def test_widget_stylesheet_has_no_hardcoded_colors_and_builds_in_order(tmp_path):
     import re
 
-    style_path = PLAN_DIR / "widget_style.css"
+    style_path = PLAN_DIR / "school_plan" / "widget_style.css"
     style_text = style_path.read_text(encoding="utf-8")
     assert not re.search(r"#[0-9a-fA-F]{3,8}\b|rgba?\(", style_text), "Hardcoded color literal found in widget_style.css"
 

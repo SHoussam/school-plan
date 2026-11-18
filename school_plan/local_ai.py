@@ -17,8 +17,8 @@ import time
 import urllib.error
 import urllib.request
 
-import config
-from deadline_utils import format_iso_end, parse_deadline_text
+from school_plan import config
+from school_plan.deadline_utils import format_iso_end, parse_deadline_text
 
 DAY_NAMES_FR = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 

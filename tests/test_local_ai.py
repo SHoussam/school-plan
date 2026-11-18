@@ -15,8 +15,8 @@ PLAN_DIR = Path(__file__).resolve().parent.parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import config
-import local_ai
+from school_plan import config
+from school_plan import local_ai
 
 
 @contextmanager

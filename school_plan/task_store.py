@@ -13,7 +13,7 @@ import os
 import shutil
 import time
 
-import config
+from school_plan import config
 
 
 class LockBusy(RuntimeError):

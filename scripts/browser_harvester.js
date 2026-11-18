@@ -3,8 +3,12 @@ const os = require('os');
 const path = require('path');
 
 function loadDotEnv() {
-  const envPath = path.join(__dirname, '.env');
-  if (!fs.existsSync(envPath)) return;
+  const candidates = [
+    path.resolve(__dirname, '..', '.env'),
+    path.join(__dirname, '.env'),
+  ];
+  const envPath = candidates.find(p => fs.existsSync(p));
+  if (!envPath) return;
   try {
     const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
     for (const raw of lines) {

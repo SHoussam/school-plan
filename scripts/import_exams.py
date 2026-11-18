@@ -10,14 +10,14 @@ import re
 import sys
 import unicodedata
 
-PLAN_DIR = Path(__file__).resolve().parent
+PLAN_DIR = Path(__file__).resolve().parent.parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import config
-from deadline_utils import format_iso_end, parse_deadline_text
+from school_plan import config
+from school_plan.deadline_utils import format_iso_end, parse_deadline_text
 import generate_calendar
-import task_store
+from school_plan import task_store
 
 
 def _slugify(text: str) -> str:

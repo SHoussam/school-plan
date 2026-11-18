@@ -11,7 +11,9 @@ import unicodedata
 from urllib.parse import urlparse
 
 HOME = Path.home()
-PLAN_DIR = Path(__file__).resolve().parent
+PACKAGE_DIR = Path(__file__).resolve().parent
+PLAN_DIR = PACKAGE_DIR.parent
+STYLE_PATH = PACKAGE_DIR / "widget_style.css"
 
 
 def load_dotenv(env_path: Path | str | None = None) -> dict[str, str]:
@@ -51,7 +53,7 @@ POS_PATH = PLAN_DIR / "widget_pos.json"
 META_PATH = PLAN_DIR / "meta.json"
 STATUS_PATH = PLAN_DIR / "ai_status.json"
 ICS_PATH = PLAN_DIR / "school-schedule.ics"
-HARVESTER_SCRIPT = PLAN_DIR / "browser_harvester.js"
+HARVESTER_SCRIPT = PLAN_DIR / "scripts" / "browser_harvester.js"
 
 _RUNTIME_DIR = Path(os.environ.get("XDG_RUNTIME_DIR") or "/tmp")
 LOCK_PATH = _RUNTIME_DIR / "school-plan.lock"

@@ -9,7 +9,7 @@ PLAN_DIR = Path(__file__).resolve().parent.parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-from deadline_utils import (
+from school_plan.deadline_utils import (
     extract_due_text_from_raw,
     format_iso_end,
     parse_deadline_text,

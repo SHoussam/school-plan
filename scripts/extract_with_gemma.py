@@ -2,10 +2,15 @@
 """
 Thin CLI over local_ai.extract_one for testing single academic task extraction.
 """
+from pathlib import Path
 import json
 import sys
 
-import local_ai
+PLAN_DIR = Path(__file__).resolve().parent.parent
+if str(PLAN_DIR) not in sys.path:
+    sys.path.insert(0, str(PLAN_DIR))
+
+from school_plan import local_ai
 
 DEFAULT_SAMPLE = (
     "ST Scolarité Tanger: Révisez le cours pour le passage au tableau lors de la prochaine "

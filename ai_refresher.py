@@ -27,8 +27,8 @@ PLAN_DIR = Path(__file__).resolve().parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import config
-from config import (
+from school_plan import config
+from school_plan.config import (
     BASE_9RAYA,
     DOWNLOADS_DIR,
     HARVESTER_SCRIPT,
@@ -39,9 +39,9 @@ from config import (
     canonical_module,
     module_for_text,
 )
-from deadline_utils import extract_due_text_from_raw, format_iso_end, parse_deadline_text
-import local_ai
-import task_store
+from school_plan.deadline_utils import extract_due_text_from_raw, format_iso_end, parse_deadline_text
+from school_plan import local_ai
+from school_plan import task_store
 
 HARVESTER_TIMEOUT_S = 28
 

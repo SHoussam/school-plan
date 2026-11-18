@@ -6,10 +6,15 @@ Verifies accuracy (>= 4/5), latency (p50/p95), and reasoning_tokens == 0.
 """
 import json
 import math
+from pathlib import Path
 import sys
 
-import config
-import local_ai
+PLAN_DIR = Path(__file__).resolve().parent.parent
+if str(PLAN_DIR) not in sys.path:
+    sys.path.insert(0, str(PLAN_DIR))
+
+from school_plan import config
+from school_plan import local_ai
 
 TEST_CASES = [
     {

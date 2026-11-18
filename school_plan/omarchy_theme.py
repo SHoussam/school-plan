@@ -602,17 +602,17 @@ def render_theme_css(theme: OmarchyTheme) -> str:
         f"@define-color rail_rose {c['rail_rose']};",
         f"@define-color rail_slate {c['rail_slate']};",
         "",
-        f'* {{ font-family: "{safe_font}", "JetBrainsMono Nerd Font", monospace; }}',
+        f'* {{ font-family: "{safe_font}", "JetBrainsMono Nerd Font", monospace; font-size: {sz_body}px; }}',
         "",
         "/* Dynamic Omarchy corner rounding & font scale */",
         f".glass-panel-grid, .glass-panel-list, .glass-panel-compact, .edit-panel {{ border-radius: {r}px; }}",
         f".cal-grid-frame, .cal-event, .task-card, .toast-bar, .help-bar {{ border-radius: {sr}px; }}",
-        f".btn-ghost, .btn-outline, .btn-primary, .btn-danger, .btn-view, .btn-nav, .btn-exam-jump, .btn-action-chip, .form-entry, .keycap {{ border-radius: {sr}px; }}",
-        f".brand-title {{ font-size: {sz_sub}px; }}",
+        f"button, .form-entry, .keycap, .hdr-alert-mismatch {{ border-radius: {sr}px; }}",
+        f".brand-title, .edit-header-title {{ font-size: {sz_sub}px; }}",
         f".ev-title, .task-title {{ font-size: {sz_body}px; }}",
         f".cal-day-num {{ font-size: {sz_title}px; }}",
-        f".ev-time, .task-meta, .form-entry, .form-field-label, .btn-view, .week-range-lbl, .toast-text {{ font-size: {sz_sm}px; }}",
-        f".sub-header, .cal-weekday, .ev-mod-tag, .ev-status-tag, .section-header, .keycap, .help-text, .compact-summary {{ font-size: {sz_cap}px; }}",
+        f".task-meta, .warning-desc, .form-entry, .form-field-label, button.btn-view, .week-range-lbl, .toast-text, button.btn-action-chip, .stat-item, button.btn-primary, button.btn-secondary, button.btn-danger, button.btn-browse {{ font-size: {sz_sm}px; }}",
+        f".sub-header, .cal-weekday, .ev-mod-tag, .ev-status-exam, .ev-status-late, .ev-status-mismatch, .ev-ai-mark, .ev-time, .cal-done-sep, .ev-done-check, .ev-title-done-slim, .badge-submitted, .badge-deadline, .badge-deadline-urgent, .section-header, .hdr-alert-mismatch, button.btn-exam-jump, button.btn-today, button.btn-toggle-done, .keycap, .help-text, .compact-summary, .edit-header-sub, .ai-provenance-note {{ font-size: {sz_cap}px; }}",
     ]
     return "\n".join(lines) + "\n"
 

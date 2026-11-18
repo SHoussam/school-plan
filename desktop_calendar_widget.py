@@ -18,8 +18,13 @@ import threading
 import time
 from datetime import date, datetime, timedelta
 
-# Automatic preload safeguard for GTK4 Layer Shell
-if "libgtk4-layer-shell.so" not in os.environ.get("LD_PRELOAD", ""):
+USE_LAYER_SHELL = (
+    os.environ.get("SCHOOL_NO_LAYER_SHELL", "") != "1"
+    and os.environ.get("GDK_BACKEND", "").lower() != "broadway"
+)
+
+# Automatic preload safeguard for GTK4 Layer Shell on Wayland
+if USE_LAYER_SHELL and "libgtk4-layer-shell.so" not in os.environ.get("LD_PRELOAD", ""):
     env = dict(os.environ)
     preload = "/usr/lib/libgtk4-layer-shell.so"
     if "LD_PRELOAD" in env and env["LD_PRELOAD"]:
@@ -31,24 +36,25 @@ if "libgtk4-layer-shell.so" not in os.environ.get("LD_PRELOAD", ""):
 import gi
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Gtk4LayerShell", "1.0")
-from gi.repository import Gdk, Gio, GLib, Gtk, Gtk4LayerShell
+if USE_LAYER_SHELL:
+    gi.require_version("Gtk4LayerShell", "1.0")
+    from gi.repository import Gdk, Gio, GLib, Gtk, Gtk4LayerShell
+else:
+    from gi.repository import Gdk, Gio, GLib, Gtk
+    Gtk4LayerShell = None
 
 PLAN_DIR = os.path.dirname(os.path.abspath(__file__))
 if PLAN_DIR not in sys.path:
     sys.path.insert(0, PLAN_DIR)
 
-import config
-from config import MODULES, canonical_module, module_for_text
-from deadline_utils import parse_iso_date_time, resolve_task_calendar_slot, resolve_task_deadline
-import local_ai
-import omarchy_theme
-import task_store
-from widget_dialogs import EditTaskDialog, format_ai_provenance_tooltip, get_ai_fields
+from school_plan import config, local_ai, omarchy_theme, task_store
+from school_plan.config import MODULES, canonical_module, module_for_text
+from school_plan.deadline_utils import parse_iso_date_time, resolve_task_calendar_slot, resolve_task_deadline
+from school_plan.widget_dialogs import EditTaskDialog, format_ai_provenance_tooltip, get_ai_fields
 
 TASKS_PATH = str(config.TASKS_PATH)
 POS_PATH = str(config.POS_PATH)
-STYLE_PATH = config.PLAN_DIR / "widget_style.css"
+STYLE_PATH = config.STYLE_PATH
 
 DAY_NAMES_FR = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"]
 MONTH_NAMES_FR = [
@@ -215,22 +221,25 @@ class SchoolCalendarWidget:
             self.margin_left = max(16, (sw - self.current_expected_width()) // 2)
             self.margin_top = max(36, (sh - 600) // 2)
 
-        # Init Layer Shell
-        Gtk4LayerShell.init_for_window(self.win)
-        if self.popup_mode:
-            Gtk4LayerShell.set_namespace(self.win, "school-calendar-popup")
-            Gtk4LayerShell.set_layer(self.win, Gtk4LayerShell.Layer.OVERLAY)
-            Gtk4LayerShell.set_keyboard_mode(self.win, Gtk4LayerShell.KeyboardMode.EXCLUSIVE)
-        else:
-            Gtk4LayerShell.set_namespace(self.win, "school-calendar")
-            Gtk4LayerShell.set_layer(self.win, Gtk4LayerShell.Layer.BOTTOM)
-            Gtk4LayerShell.set_keyboard_mode(self.win, Gtk4LayerShell.KeyboardMode.NONE)
+        # Init Layer Shell (when running on Wayland compositor)
+        if Gtk4LayerShell is not None:
+            Gtk4LayerShell.init_for_window(self.win)
+            if self.popup_mode:
+                Gtk4LayerShell.set_namespace(self.win, "school-calendar-popup")
+                Gtk4LayerShell.set_layer(self.win, Gtk4LayerShell.Layer.OVERLAY)
+                Gtk4LayerShell.set_keyboard_mode(self.win, Gtk4LayerShell.KeyboardMode.EXCLUSIVE)
+            else:
+                Gtk4LayerShell.set_namespace(self.win, "school-calendar")
+                Gtk4LayerShell.set_layer(self.win, Gtk4LayerShell.Layer.BOTTOM)
+                Gtk4LayerShell.set_keyboard_mode(self.win, Gtk4LayerShell.KeyboardMode.NONE)
 
-        Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.TOP, True)
-        Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.LEFT, True)
-        Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.RIGHT, False)
-        Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.BOTTOM, False)
-        Gtk4LayerShell.set_exclusive_zone(self.win, 0)
+            Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.TOP, True)
+            Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.LEFT, True)
+            Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.RIGHT, False)
+            Gtk4LayerShell.set_anchor(self.win, Gtk4LayerShell.Edge.BOTTOM, False)
+            Gtk4LayerShell.set_exclusive_zone(self.win, 0)
+        else:
+            self.win.set_decorated(False)
 
         self.apply_clamped_margins()
 
@@ -342,6 +351,8 @@ class SchoolCalendarWidget:
         return GRID_WIDTH if self.view_mode == "grid" else LIST_WIDTH
 
     def apply_clamped_margins(self):
+        if Gtk4LayerShell is None:
+            return
         sw, sh = self.get_screen_size()
         w = self.current_expected_width()
         max_left = max(16, sw - w - 20)
@@ -487,7 +498,7 @@ class SchoolCalendarWidget:
             is_alt = bool(state & Gdk.ModifierType.ALT_MASK)
             button = gesture.get_current_button()
 
-            if button == 1 and (is_alt or self.header_drag_target):
+            if Gtk4LayerShell is not None and button == 1 and (is_alt or self.header_drag_target):
                 gesture.set_state(Gtk.EventSequenceState.CLAIMED)
                 self.is_dragging = True
                 self.drag_start_top = Gtk4LayerShell.get_margin(self.win, Gtk4LayerShell.Edge.TOP)
@@ -820,12 +831,12 @@ class SchoolCalendarWidget:
 
     def _present_modal_dialog(self, dlg):
         self._modal_open_count += 1
-        if self.popup_mode:
+        if self.popup_mode and Gtk4LayerShell is not None:
             Gtk4LayerShell.set_keyboard_mode(self.win, Gtk4LayerShell.KeyboardMode.ON_DEMAND)
 
         def on_closed(_w):
             self._modal_open_count = max(0, self._modal_open_count - 1)
-            if self.popup_mode and not self.closed and self._modal_open_count == 0:
+            if self.popup_mode and not self.closed and self._modal_open_count == 0 and Gtk4LayerShell is not None:
                 Gtk4LayerShell.set_keyboard_mode(self.win, Gtk4LayerShell.KeyboardMode.EXCLUSIVE)
 
         dlg.connect("destroy", on_closed)
@@ -1398,6 +1409,8 @@ class SchoolCalendarWidget:
             if done_items:
                 lbl_sep = Gtk.Label(label=f"FAIT ({len(done_items)})", xalign=0)
                 lbl_sep.add_css_class("cal-done-sep")
+                if active_items:
+                    lbl_sep.add_css_class("cal-done-sep-divider")
                 day_box.append(lbl_sep)
                 for _slot, task in done_items:
                     day_box.append(self.create_grid_done_bar(task))
@@ -1513,18 +1526,14 @@ class SchoolCalendarWidget:
             room_txt = extract_exam_room(task)
             ex_txt = f"EXAM · {room_txt}" if room_txt else "EXAM · CC1"
             lbl_ex = Gtk.Label(label=ex_txt, xalign=0)
-            lbl_ex.set_ellipsize(3)
+            lbl_ex.set_hexpand(True)
             lbl_ex.add_css_class("ev-status-exam")
             tag_row.append(lbl_ex)
         else:
             lbl_mod = Gtk.Label(label=short_module_tag(task), xalign=0)
-            lbl_mod.set_ellipsize(3)
+            lbl_mod.set_hexpand(True)
             lbl_mod.add_css_class("ev-mod-tag")
             tag_row.append(lbl_mod)
-
-        tag_spacer = Gtk.Box()
-        tag_spacer.set_hexpand(True)
-        tag_row.append(tag_spacer)
 
         if is_mismatch:
             lbl_m = Gtk.Label(label="! NON REMIS", xalign=1)

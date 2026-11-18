@@ -8,7 +8,7 @@ PLAN_DIR = Path(__file__).resolve().parent.parent
 if str(PLAN_DIR) not in sys.path:
     sys.path.insert(0, str(PLAN_DIR))
 
-import task_store
+from school_plan import task_store
 
 
 def test_atomic_save_preserves_original_on_halfway_error(tmp_path):

@@ -11,8 +11,8 @@ import gi
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gdk, Gio, Gtk
 
-import config
-from deadline_utils import resolve_task_deadline
+from school_plan import config
+from school_plan.deadline_utils import resolve_task_deadline
 
 ICON_FOLDER = "\uf114"
 ICON_TRASH = "\uf1f8"
