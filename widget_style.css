@@ -1,0 +1,880 @@
+/*
+ * Omarchy-Native Structural Stylesheet for EMSI School-Plan Desktop Calendar Widget.
+ * Every color resolves through @define-color tokens generated live by omarchy_theme.py.
+ * Zero hard-coded theme colors; square geometry by default (follows Hyprland rounding).
+ */
+
+window {
+    background: transparent;
+    color: @fg;
+}
+
+/* ============================================================
+   OUTER SURFACES
+   ============================================================ */
+.glass-panel-grid {
+    background-color: @panel_bg;
+    border: 1px solid @border;
+    padding: 12px 14px;
+    min-width: 1012px;
+}
+
+.glass-panel-list {
+    background-color: @panel_bg;
+    border: 1px solid @border;
+    padding: 12px 14px;
+    min-width: 452px;
+}
+
+.glass-panel-compact {
+    background-color: @panel_bg;
+    border: 1px solid @border;
+    padding: 6px 10px;
+    min-width: 332px;
+}
+
+.popup-elevated {
+    background-color: @popup_bg;
+    border: 2px solid @outer_border;
+}
+
+/* ============================================================
+   HEADER BAR
+   ============================================================ */
+.header-bar {
+    margin-bottom: 10px;
+}
+
+.drag-handle {
+    color: @secondary;
+    opacity: 0.55;
+    padding: 2px 4px;
+    margin-right: 4px;
+    transition: opacity 100ms ease, color 100ms ease;
+}
+
+.drag-handle:hover {
+    color: @bright;
+    opacity: 1.0;
+}
+
+.brand-title {
+    font-weight: 700;
+    color: @bright;
+    letter-spacing: 0.06em;
+}
+
+.sub-header {
+    color: @secondary;
+    margin-top: 1px;
+    letter-spacing: 0.03em;
+}
+
+/* Compact live Gemma status dot */
+.beacon-loaded {
+    color: @success_ink;
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+.beacon-standby {
+    color: @secondary;
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+.beacon-offline {
+    color: @danger_ink;
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+.beacon-running {
+    color: @warning_ink;
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+/* Inline hairline status triggers in header (no filled pills) */
+.hdr-alert-mismatch {
+    background: transparent;
+    color: @warning_ink;
+    border: 1px solid @warn_border;
+    padding: 2px 6px;
+    margin-left: 8px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+button.btn-exam-jump {
+    background: transparent;
+    color: @danger_ink;
+    border: 1px solid @danger_border;
+    min-height: 22px;
+    padding: 0 7px;
+    margin-left: 6px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+button.btn-exam-jump:hover {
+    background-color: @danger_tint;
+    border-color: @danger;
+    color: @bright;
+}
+
+button.btn-exam-jump-active {
+    background-color: @danger_tint;
+    border-color: @danger;
+    color: @bright;
+}
+
+/* Week Navigation */
+.week-nav-group {
+    background-color: @ctrl_normal_bg;
+    border: 1px solid @hairline;
+    padding: 1px;
+}
+
+button.btn-nav {
+    background: transparent;
+    color: @secondary;
+    border: 1px solid transparent;
+    min-width: 22px;
+    min-height: 22px;
+    padding: 0 4px;
+    font-weight: 600;
+    transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+button.btn-nav:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @ctrl_hover_border;
+    color: @bright;
+}
+
+button.btn-nav:active {
+    background-color: @ctrl_pressed_bg;
+}
+
+.week-range-lbl {
+    color: @fg;
+    font-weight: 600;
+    padding: 0 8px;
+}
+
+button.btn-today {
+    background: transparent;
+    color: @accent_ink;
+    border: 1px solid @accent;
+    min-height: 22px;
+    padding: 0 6px;
+    margin-left: 3px;
+    font-weight: 600;
+    transition: background 100ms ease, color 100ms ease;
+}
+
+button.btn-today:hover {
+    background-color: @accent_tint;
+    color: @bright;
+}
+
+/* Segmented View Switcher */
+.view-switch-group {
+    background-color: @ctrl_normal_bg;
+    border: 1px solid @hairline;
+    padding: 1px;
+    margin-left: 8px;
+}
+
+button.btn-view {
+    background: transparent;
+    color: @secondary;
+    border: 1px solid transparent;
+    min-height: 22px;
+    padding: 0 8px;
+    font-weight: 500;
+    transition: background 100ms ease, color 100ms ease;
+}
+
+button.btn-view:hover {
+    background-color: @ctrl_hover_bg;
+    color: @fg;
+}
+
+button.btn-view-active {
+    background-color: @ctrl_selected_bg;
+    color: @bright;
+    font-weight: 700;
+}
+
+/* Structural Vertical Separator */
+.hdr-sep {
+    min-width: 1px;
+    background-color: @hairline;
+    margin: 3px 6px;
+}
+
+/* Quiet Foreground-Tinted Ghost Controls (reserve 1px border so bounds never shift) */
+button.btn-ghost {
+    background: transparent;
+    color: @secondary;
+    border: 1px solid transparent;
+    min-width: 24px;
+    min-height: 24px;
+    padding: 0 4px;
+    margin-left: 2px;
+    font-weight: 500;
+    transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+button.btn-ghost:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @ctrl_hover_border;
+    color: @bright;
+}
+
+button.btn-ghost:active {
+    background-color: @ctrl_pressed_bg;
+}
+
+button.btn-ghost.is-selected {
+    background-color: @ctrl_selected_bg;
+    color: @bright;
+    font-weight: 700;
+}
+
+button.btn-ghost.btn-ai-busy {
+    background-color: @warn_tint;
+    border-color: @warn_border;
+    color: @warning_ink;
+}
+
+button.btn-ghost.btn-close:hover {
+    background-color: @danger_tint;
+    border-color: @danger_border;
+    color: @danger_ink;
+}
+
+button.btn-ghost:disabled {
+    opacity: 0.48;
+}
+
+/* ============================================================
+   7-DAY WEEKLY CALENDAR GRID
+   ============================================================ */
+.cal-grid-frame {
+    background-color: @bg;
+    border: 1px solid @hairline;
+}
+
+.cal-col-divider {
+    min-width: 1px;
+    background-color: @hairline;
+}
+
+.cal-day-header {
+    padding: 7px 6px 6px 6px;
+    border-top: 2px solid transparent;
+    border-bottom: 1px solid @hairline;
+}
+
+.cal-day-header-today {
+    border-top: 2px solid @accent;
+    background-color: @today_tint;
+}
+
+.cal-weekday {
+    font-weight: 600;
+    color: @secondary;
+    letter-spacing: 0.06em;
+}
+
+.cal-weekday-today {
+    color: @accent_ink;
+    font-weight: 700;
+}
+
+.cal-day-num {
+    font-weight: 500;
+    color: @fg;
+    margin-top: 2px;
+}
+
+.cal-day-num-today {
+    color: @accent_ink;
+    font-weight: 700;
+}
+
+.cal-day-body {
+    padding: 6px 5px 10px 5px;
+    min-height: 360px;
+}
+
+.cal-day-body-today {
+    background-color: @today_tint;
+}
+
+.cal-empty-day {
+    color: @hairline;
+    margin-top: 14px;
+}
+
+/* ============================================================
+   SHARP SURFACE + 2PX LEFT ACCENT RAIL EVENT CARDS
+   ============================================================ */
+.cal-event {
+    background-color: @surface;
+    border: 1px solid @card_border;
+    border-left-width: 2px;
+    padding: 7px 8px 6px 8px;
+    margin-bottom: 6px;
+    transition: background 100ms ease, border-color 100ms ease;
+}
+
+.cal-event:hover {
+    background-color: @surface_hover;
+    border-top-color: @ctrl_hover_border;
+    border-right-color: @ctrl_hover_border;
+    border-bottom-color: @ctrl_hover_border;
+}
+
+/* Module left rails — 100% resolved from active Omarchy ANSI palette */
+.ev-teal    { border-left-color: @rail_teal; }
+.ev-cyan    { border-left-color: @rail_cyan; }
+.ev-amber   { border-left-color: @rail_amber; }
+.ev-bronze  { border-left-color: @rail_bronze; }
+.ev-emerald { border-left-color: @rail_emerald; }
+.ev-indigo  { border-left-color: @rail_indigo; }
+.ev-cobalt  { border-left-color: @rail_cobalt; }
+.ev-plum    { border-left-color: @rail_plum; }
+.ev-violet  { border-left-color: @rail_violet; }
+.ev-rose    { border-left-color: @rail_rose; }
+.ev-slate   { border-left-color: @rail_slate; }
+
+/* Exam & Mismatch emphasis */
+.block-exam {
+    border-color: @danger_border;
+    border-left: 2px solid @danger;
+}
+
+.block-exam:hover {
+    border-color: @danger;
+    border-left: 2px solid @danger;
+}
+
+.cal-event-mismatch,
+.card-mismatch {
+    border-color: @warn_border;
+    border-left: 2px solid @warning;
+}
+
+.cal-event-mismatch:hover,
+.card-mismatch:hover {
+    border-color: @warning;
+    border-left: 2px solid @warning;
+}
+
+/* Card typography & micro-rows */
+.ev-tag-row {
+    margin-bottom: 4px;
+}
+
+.ev-mod-tag {
+    color: @secondary;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.ev-status-exam {
+    color: @danger_ink;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.ev-status-late {
+    color: @danger_ink;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.ev-status-mismatch {
+    color: @warning_ink;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.ev-ai-mark {
+    color: @accent_ink;
+    margin-left: 4px;
+}
+
+.ev-title {
+    font-weight: 600;
+    color: @fg;
+}
+
+.ev-meta-row {
+    margin-top: 5px;
+}
+
+.ev-time {
+    color: @secondary;
+    font-weight: 500;
+}
+
+button.text-button.ev-mini-btn,
+button.ev-mini-btn {
+    background: transparent;
+    color: @secondary;
+    border: 1px solid transparent;
+    min-width: 18px;
+    min-height: 18px;
+    padding: 0 2px;
+    font-size: 10px;
+    opacity: 0.55;
+    transition: opacity 100ms ease, background 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+.cal-event:hover button.ev-mini-btn {
+    opacity: 0.92;
+}
+
+button.text-button.ev-mini-btn:hover,
+button.ev-mini-btn:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @ctrl_hover_border;
+    color: @bright;
+    opacity: 1.0;
+}
+
+/* ============================================================
+   QUIET MONOCHROME COMPLETED ITEMS
+   ============================================================ */
+.cal-done-sep {
+    margin-top: 8px;
+    margin-bottom: 4px;
+    padding-top: 6px;
+    border-top: 1px solid @hairline;
+    font-weight: 700;
+    color: @secondary;
+    letter-spacing: 0.06em;
+}
+
+.cal-event-done-compact {
+    background: transparent;
+    border: 1px solid transparent;
+    border-left: 2px solid @hairline;
+    padding: 3px 5px;
+    margin-bottom: 2px;
+    transition: background 100ms ease, border-color 100ms ease;
+}
+
+.cal-event-done-compact:hover {
+    background-color: @ctrl_hover_bg;
+    border-left-color: @success;
+}
+
+.ev-done-check {
+    color: @success_ink;
+    font-weight: 700;
+}
+
+.ev-title-done-slim {
+    color: @secondary;
+    text-decoration: line-through;
+}
+
+.cal-event-done-compact:hover .ev-title-done-slim {
+    color: @fg;
+}
+
+button.text-button.ev-mini-btn-slim,
+button.ev-mini-btn-slim {
+    background: transparent;
+    color: @secondary;
+    border: 1px solid transparent;
+    min-width: 16px;
+    min-height: 16px;
+    padding: 0 2px;
+    font-size: 10px;
+    opacity: 0.35;
+    transition: opacity 100ms ease, background 100ms ease, color 100ms ease;
+}
+
+.cal-event-done-compact:hover button.ev-mini-btn-slim {
+    opacity: 0.90;
+}
+
+button.text-button.ev-mini-btn-slim:hover,
+button.ev-mini-btn-slim:hover {
+    background-color: @ctrl_hover_bg;
+    color: @bright;
+    opacity: 1.0;
+}
+
+/* ============================================================
+   LIST VIEW
+   ============================================================ */
+.stats-bar {
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid @hairline;
+}
+
+.stat-item {
+    color: @secondary;
+    font-weight: 600;
+    margin-right: 12px;
+    letter-spacing: 0.04em;
+}
+
+.stat-urgent {
+    color: @danger_ink;
+}
+
+.stat-mismatch {
+    color: @warning_ink;
+}
+
+.stat-done {
+    color: @success_ink;
+}
+
+.section-header {
+    font-weight: 700;
+    color: @secondary;
+    letter-spacing: 0.07em;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid @hairline;
+}
+
+.section-title-urgent {
+    color: @danger_ink;
+}
+
+.section-title-mismatch {
+    color: @warning_ink;
+}
+
+.task-card {
+    background-color: @surface;
+    border: 1px solid @card_border;
+    border-left-width: 2px;
+    padding: 9px 11px;
+    margin-bottom: 6px;
+    transition: background 100ms ease, border-color 100ms ease;
+}
+
+.task-card:hover {
+    background-color: @surface_hover;
+    border-top-color: @ctrl_hover_border;
+    border-right-color: @ctrl_hover_border;
+    border-bottom-color: @ctrl_hover_border;
+}
+
+.card-done-compact {
+    background: transparent;
+    border: 1px solid transparent;
+    border-left: 2px solid @hairline;
+    padding: 5px 8px;
+    margin-bottom: 3px;
+    transition: background 100ms ease, border-color 100ms ease;
+}
+
+.card-done-compact:hover {
+    background-color: @ctrl_hover_bg;
+    border-left-color: @success;
+}
+
+.badge-submitted {
+    color: @success_ink;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.badge-deadline {
+    color: @secondary;
+    font-weight: 600;
+}
+
+.badge-deadline-urgent {
+    color: @danger_ink;
+    font-weight: 700;
+}
+
+.task-title {
+    font-weight: 600;
+    color: @fg;
+    margin-top: 3px;
+}
+
+.task-meta {
+    color: @secondary;
+    margin-top: 2px;
+}
+
+.warning-desc {
+    color: @warning_ink;
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+.card-actions {
+    margin-top: 7px;
+}
+
+/* Peer outline action buttons (emphasis without solid fills) */
+button.text-button.btn-action-chip,
+button.btn-action-chip {
+    background: transparent;
+    color: @fg;
+    border: 1px solid @ctrl_border;
+    padding: 2px 8px;
+    min-height: 22px;
+    font-weight: 500;
+    transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+button.text-button.btn-action-chip:hover,
+button.btn-action-chip:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @fg;
+    color: @bright;
+}
+
+button.btn-action-chip:active {
+    background-color: @ctrl_pressed_bg;
+}
+
+button.btn-done-chip {
+    border-color: @success;
+    color: @success_ink;
+}
+
+button.btn-done-chip:hover {
+    background-color: @ok_tint;
+    color: @bright;
+}
+
+button.btn-submit-alert-chip {
+    border-color: @warning;
+    color: @warning_ink;
+}
+
+button.btn-submit-alert-chip:hover {
+    background-color: @warn_tint;
+    color: @bright;
+}
+
+button.btn-toggle-done {
+    background: transparent;
+    color: @secondary;
+    border: 1px solid transparent;
+    font-weight: 700;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    padding: 3px 6px;
+}
+
+button.btn-toggle-done:hover {
+    background-color: @ctrl_hover_bg;
+    color: @bright;
+}
+
+/* ============================================================
+   COMPACT PILL, TOAST & INLINE KEYBOARD HELP BAR
+   ============================================================ */
+.compact-summary {
+    color: @fg;
+    font-weight: 600;
+}
+
+.toast-bar {
+    background-color: @surface;
+    border: 1px solid @accent;
+    padding: 5px 11px;
+    margin-top: 8px;
+}
+
+.toast-text {
+    color: @fg;
+    font-weight: 600;
+}
+
+.help-bar {
+    background-color: @inset;
+    border: 1px solid @hairline;
+    padding: 6px 10px;
+    margin-top: 8px;
+}
+
+.keycap {
+    background-color: @surface;
+    color: @bright;
+    border: 1px solid @ctrl_border;
+    padding: 1px 5px;
+    margin-right: 4px;
+    font-weight: 700;
+}
+
+.help-text {
+    color: @secondary;
+    margin-right: 12px;
+}
+
+/* ============================================================
+   MODAL EDIT / ADD DIALOG (Omarchy Emphasis Without Fills)
+   ============================================================ */
+.edit-window {
+    background-color: @bg;
+}
+
+.edit-panel {
+    background-color: @bg;
+    border: 2px solid @outer_border;
+    padding: 16px 18px;
+}
+
+.edit-header-title {
+    font-weight: 700;
+    color: @bright;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+}
+
+.edit-header-sub {
+    color: @secondary;
+    margin-bottom: 8px;
+}
+
+.ai-provenance-note {
+    color: @accent_ink;
+    font-weight: 600;
+    margin-top: 2px;
+    margin-bottom: 6px;
+}
+
+.form-field-label {
+    font-weight: 600;
+    color: @secondary;
+    margin-top: 8px;
+    margin-bottom: 3px;
+}
+
+.form-entry {
+    background-color: @ctrl_normal_bg;
+    color: @fg;
+    border: 1px solid @ctrl_border;
+    padding: 6px 9px;
+}
+
+.form-entry:focus {
+    border-color: @accent;
+    background-color: @ctrl_hover_bg;
+    color: @bright;
+}
+
+entry selection {
+    background-color: @text_sel_bg;
+    color: @bright;
+}
+
+.edit-panel dropdown > button {
+    background-color: @ctrl_normal_bg;
+    color: @fg;
+    border: 1px solid @ctrl_border;
+    padding: 5px 8px;
+}
+
+.edit-panel dropdown > button:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @fg;
+    color: @bright;
+}
+
+.btn-primary {
+    background: transparent;
+    color: @accent_ink;
+    border: 1px solid @accent;
+    padding: 5px 12px;
+    font-weight: 600;
+    transition: background 100ms ease, color 100ms ease;
+}
+
+.btn-primary:hover {
+    background-color: @accent_tint;
+    color: @bright;
+}
+
+.btn-secondary,
+.btn-outline {
+    background: transparent;
+    color: @fg;
+    border: 1px solid @ctrl_border;
+    padding: 5px 11px;
+    font-weight: 500;
+    transition: background 100ms ease, border-color 100ms ease, color 100ms ease;
+}
+
+.btn-secondary:hover,
+.btn-outline:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @fg;
+    color: @bright;
+}
+
+.btn-danger {
+    background: transparent;
+    color: @danger_ink;
+    border: 1px solid @danger;
+    padding: 5px 10px;
+    font-weight: 600;
+    transition: background 100ms ease, color 100ms ease;
+}
+
+.btn-danger:hover {
+    background-color: @danger_tint;
+    color: @bright;
+}
+
+.btn-browse {
+    background: transparent;
+    color: @fg;
+    border: 1px solid @ctrl_border;
+    padding: 5px 10px;
+    margin-left: 6px;
+    font-weight: 500;
+}
+
+.btn-browse:hover {
+    background-color: @ctrl_hover_bg;
+    border-color: @fg;
+    color: @bright;
+}
+
+/* ============================================================
+   FOCUS & SCROLLBARS
+   ============================================================ */
+button:focus-visible,
+entry:focus-visible {
+    outline: 1px solid @accent;
+    outline-offset: 1px;
+}
+
+scrollbar,
+scrollbar trough {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: @scroll_thumb;
+    min-width: 4px;
+}
+
+scrollbar slider:hover {
+    background-color: @scroll_thumb_hover;
+}

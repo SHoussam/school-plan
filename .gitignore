@@ -1,0 +1,28 @@
+# Environment & personal URLs / config
+.env
+.env.*
+!.env.example
+
+# Personal / runtime state (kept locally on disk, never committed)
+tasks.json
+tasks.json.*
+*.bak-*
+*.prev
+school-schedule.ics
+ai_status.json
+meta.json
+widget_pos.json
+sync.log
+prompt.md
+
+# Temp files, locks, caches
+*.tmp
+.*.tmp
+*.lock
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+node_modules/
+.DS_Store
